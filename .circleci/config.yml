@@ -3,9 +3,17 @@ version: 2.1
 commands:
   install-hclq:
     steps:
-      # see https://github.com/mattolenik/hclq#install-with-go
+      # see https://github.com/mattolenik/hclq#auto-updating-script
       - run: |
-          go get -u github.com/mattolenik/hclq
+          # Download the script
+          curl -sSLo install.sh https://install.hclq.sh
+
+          # Inspect the script before executing, as is good practice
+          # for code from the internet, regardless of trust!
+          less install.sh
+
+          # Run it!
+          sh install.sh
 
 jobs:
   hclq:
