@@ -7,13 +7,10 @@ commands:
       - run: |
           # Download the script
           curl -sSLo install.sh https://install.hclq.sh
-
-          # Inspect the script before executing, as is good practice
-          # for code from the internet, regardless of trust!
-          less install.sh
+          chmod +x install.sh
 
           # Run it!
-          sh install.sh
+          env -i sh ./install.sh
 
 jobs:
   hclq:
