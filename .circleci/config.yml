@@ -1,0 +1,30 @@
+version: 2.1
+
+commands:
+  install-hclq:
+    steps:
+      # see https://github.com/mattolenik/hclq#install-with-go
+      - run: |
+          go get -u github.com/mattolenik/hclq
+
+jobs:
+  hclq:
+    docker:
+      - image: cimg/go:1.18.2
+    resource_class: medium
+    steps:
+      - checkout
+      - install-hclq
+      - run:
+          name: HCLQ get
+          command: |
+            cat example.tf | hclq get 'data.foo.bar'
+      - run:
+          name: HCLQ get
+          command: |
+            cat example.tf | hclq set 'data.*.bar' "hogehoge"
+
+workflows:
+  main:
+    jobs:
+      - hclq
