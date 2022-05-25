@@ -5,11 +5,9 @@ commands:
     steps:
       # see https://github.com/mattolenik/hclq#auto-updating-script
       - run: |
-          # Download the script
           curl -sSLo install.sh https://install.hclq.sh
           chmod +x install.sh
-
-          # Run it!
+          # needs an interactive session somehow
           env -i sh ./install.sh
 
 jobs:
@@ -25,9 +23,11 @@ jobs:
           command: |
             cat example.tf | hclq get 'data.foo.bar'
       - run:
-          name: HCLQ get
+          name: HCLQ set
           command: |
-            cat example.tf | hclq set 'data.*.bar' "hogehoge"
+            cat example.tf | hclq set 'data.*.bar' "hogehoge" > modified.tf
+            
+            cat modified.tf
 
 workflows:
   main:
